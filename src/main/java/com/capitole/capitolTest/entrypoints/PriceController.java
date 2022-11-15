@@ -1,18 +1,18 @@
 package com.capitole.capitolTest.entrypoints;
 
-import com.capitole.capitolTest.core.entities.FeeDetail;
-import com.capitole.capitolTest.core.entities.dtos.FeeDetailDTO;
+import com.capitole.capitolTest.core.entities.dtos.PriceDetailDTO;
 import com.capitole.capitolTest.core.useCases.GetPriceUseCase;
 import com.capitole.capitolTest.entrypoints.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class PriceController {
     private final GetPriceUseCase getPriceUseCase;
 
@@ -21,15 +21,17 @@ public class PriceController {
         this.getPriceUseCase = getPriceUseCase;
     }
 
-    @GetMapping
-    public FeeDetailDTO getFeeDetail(@RequestParam Optional<LocalDateTime> implementationDate,
-                                     @RequestParam Optional<Integer> productId,
-                                     @RequestParam Optional<Integer> brandId) {
+    @GetMapping("/price")
+    public PriceDetailDTO getPriceDetail(@RequestParam
+                                         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+                                         Optional<LocalDateTime> implementationDate,
+                                         @RequestParam Optional<Integer> productId,
+                                         @RequestParam Optional<Integer> brandId) {
         this.validateInputs(implementationDate, productId, brandId);
 
-        FeeDetail feeDetail = getPriceUseCase.execute(implementationDate.get(), brandId.get(), productId.get());
+        PriceDetailDTO priceDetailDTO = getPriceUseCase.execute(implementationDate.get(), brandId.get(), productId.get());
 
-        return FeeDetailDTO.builder().build();
+        return priceDetailDTO;
     }
 
     private void validateInputs (Optional<LocalDateTime> opImplementationDate,

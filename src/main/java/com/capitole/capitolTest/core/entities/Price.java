@@ -1,6 +1,6 @@
 package com.capitole.capitolTest.core.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Table(name = "PRICES")
 public class Price {
     @Id
