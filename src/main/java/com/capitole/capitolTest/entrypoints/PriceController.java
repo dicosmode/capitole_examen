@@ -5,6 +5,8 @@ import com.capitole.capitolTest.core.useCases.GetPriceUseCase;
 import com.capitole.capitolTest.entrypoints.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class PriceController {
     }
 
     @GetMapping("/price")
-    public PriceDetailDTO getPriceDetail(@RequestParam
+    public ResponseEntity<PriceDetailDTO> getPriceDetail(@RequestParam
                                          @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
                                          Optional<LocalDateTime> implementationDate,
                                          @RequestParam Optional<Integer> productId,
@@ -31,7 +33,7 @@ public class PriceController {
 
         PriceDetailDTO priceDetailDTO = getPriceUseCase.execute(implementationDate.get(), brandId.get(), productId.get());
 
-        return priceDetailDTO;
+        return new ResponseEntity<>(priceDetailDTO, HttpStatus.OK);
     }
 
     private void validateInputs (Optional<LocalDateTime> opImplementationDate,
