@@ -31,7 +31,6 @@ public class PriceControllerIntegrationTest {
 
     @Test
     public void WhenExecuteTest1_ThenReturnPriceList_1() throws Exception {
-        //Act
         mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2020-06-14T10:00:00&productId=35455&brandId=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -44,7 +43,6 @@ public class PriceControllerIntegrationTest {
     }
     @Test
     public void WhenExecuteTest2_ThenReturnPriceList_2() throws Exception {
-        //Act
         mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2020-06-14T16:00:00&productId=35455&brandId=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -57,7 +55,6 @@ public class PriceControllerIntegrationTest {
     }
     @Test
     public void WhenExecuteTest3_ThenReturnPriceList_1() throws Exception {
-        //Act
         mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2020-06-14T21:00:00&productId=35455&brandId=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -70,7 +67,6 @@ public class PriceControllerIntegrationTest {
     }
     @Test
     public void WhenExecuteTest4_ThenReturnPriceList_3() throws Exception {
-        //Act
         mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2020-06-15T10:00:00&productId=35455&brandId=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -83,7 +79,6 @@ public class PriceControllerIntegrationTest {
     }
     @Test
     public void WhenExecuteTest5_ThenReturnPriceList_4() throws Exception {
-        //Act
         mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2020-06-16T21:00:00&productId=35455&brandId=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -93,5 +88,17 @@ public class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.priceList", equalTo(4)))
                 .andExpect(jsonPath("$.productId", equalTo(35455)))
                 .andExpect(jsonPath("$.price", equalTo(38.95)));
+    }
+
+    @Test
+    public void WhenExecuteDateThatNoContain_ThenReturnNoContent() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2021-06-16T21:00:00&productId=35455&brandId=1"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+    @Test
+    public void WhenExecuteWithoutParams_ThenReturnBadRequest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/price?implementationDate=2021-06-16T21:00:00&productId=&brandId=1"))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -3,7 +3,7 @@ package com.capitole.capitolTest.core.useCases.impl;
 import com.capitole.capitolTest.core.entities.Price;
 import com.capitole.capitolTest.core.entities.dtos.PriceDetailDTO;
 import com.capitole.capitolTest.core.useCases.GetPriceUseCase;
-import com.capitole.capitolTest.entrypoints.exception.NotFoundException;
+import com.capitole.capitolTest.core.exception.PricesNotFoundException;
 import com.capitole.capitolTest.repositories.GetPriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class DefaultGetPriceUseCase implements GetPriceUseCase {
         List<Price> prices = this.getPriceRepository.findAllPrices(implementationDate,
                                                                         Integer.valueOf(brandId),
                                                                         Integer.valueOf(productId));
-        Price price = prices.stream().max(Comparator.comparing(Price::getPriority)).orElseThrow(() -> new NotFoundException("No found prices"));
+        Price price = prices.stream().max(Comparator.comparing(Price::getPriority)).orElseThrow(() -> new PricesNotFoundException("No found prices"));
         return PriceDetailDTO.builder()
                 .priceList(price.getPriceList())
                 .price(price.getPrice())

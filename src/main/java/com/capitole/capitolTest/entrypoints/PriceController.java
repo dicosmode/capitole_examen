@@ -2,7 +2,7 @@ package com.capitole.capitolTest.entrypoints;
 
 import com.capitole.capitolTest.core.entities.dtos.PriceDetailDTO;
 import com.capitole.capitolTest.core.useCases.GetPriceUseCase;
-import com.capitole.capitolTest.entrypoints.exception.NotFoundException;
+import com.capitole.capitolTest.entrypoints.exception.MandatoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -40,8 +40,8 @@ public class PriceController {
                                  Optional<Integer> opProductId,
                                  Optional<Integer> opBrandId) {
 
-        opImplementationDate.orElseThrow(() -> new NotFoundException("Implementation date is empty!"));
-        opProductId.orElseThrow(() -> new NotFoundException("Product Id is empty!"));
-        opBrandId.orElseThrow(() -> new NotFoundException("Brand Id is empty!"));
+        opImplementationDate.orElseThrow(() -> new MandatoryException("Implementation date is empty!"));
+        opProductId.orElseThrow(() -> new MandatoryException("Product Id is empty!"));
+        opBrandId.orElseThrow(() -> new MandatoryException("Brand Id is empty!"));
     }
 }
