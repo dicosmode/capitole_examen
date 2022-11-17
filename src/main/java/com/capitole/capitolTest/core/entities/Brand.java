@@ -1,6 +1,6 @@
 package com.capitole.capitolTest.core.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,10 @@ import javax.persistence.Table;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Table(name = "BRANDS")
 public class Brand {
     @Id
